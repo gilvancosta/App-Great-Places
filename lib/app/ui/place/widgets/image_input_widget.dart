@@ -1,10 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart' as syspaths;
 
 class ImageInputWidget extends StatefulWidget {
-  const ImageInputWidget({Key? key}) : super(key: key);
+  final Function onSelectedImage;
+
+  const ImageInputWidget({
+    Key? key,
+    required this.onSelectedImage,
+  }) : super(key: key);
 
   @override
   State<ImageInputWidget> createState() => _ImageInputState();
@@ -23,6 +30,14 @@ class _ImageInputState extends State<ImageInputWidget> {
     setState(() {
       _storedImage = File(imageFile.path);
     });
+
+    final appDir = await syspaths.getApplicationDocumentsDirectory();
+    String fileName = path.basename(_storedImage!.path);
+    final savedImage = await _storedImage!.copy(
+      '${appDir.path}/$fileName',
+    );
+
+    widget.onSelectedImage(savedImage);
   }
 
   @override
@@ -49,7 +64,6 @@ class _ImageInputState extends State<ImageInputWidget> {
           child: TextButton.icon(
             icon: const Icon(Icons.camera),
             label: const Text('Tirar Foto'),
-            
             onPressed: _takePicture,
           ),
         ),

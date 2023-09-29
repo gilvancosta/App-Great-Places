@@ -15,7 +15,7 @@ class PlaceLocationIntinty {
 class PlaceIntinty {
   final String id;
   final String title;
-  final PlaceLocationIntinty location;
+  final PlaceLocationIntinty? location;
   final File image;
 
   PlaceIntinty({
