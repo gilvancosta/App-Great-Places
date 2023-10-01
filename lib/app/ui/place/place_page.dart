@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:great_places/app/core/controllers/great_places_controller.dart';
 import 'package:provider/provider.dart';
+
 import 'widgets/image_input_widget.dart';
+import 'package:great_places/app/core/controllers/great_places_controller.dart';
+
 
 class PlaceFormScreen extends StatefulWidget {
   const PlaceFormScreen({super.key});
@@ -66,7 +68,7 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
             label: const Text('Adicionar'),
             style: ElevatedButton.styleFrom(
               foregroundColor: Colors.black,
-              backgroundColor: Theme.of(context).colorScheme.secondary,
+              backgroundColor: Theme.of(context).colorScheme.primary,
               elevation: 0,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
