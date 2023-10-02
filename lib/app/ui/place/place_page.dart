@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'widgets/image_input_widget.dart';
 import 'package:great_places/app/core/controllers/great_places_controller.dart';
 
+import 'widgets/location_input_widget.dart';
 
 class PlaceFormScreen extends StatefulWidget {
   const PlaceFormScreen({super.key});
@@ -58,6 +59,8 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
                     ),
                     const SizedBox(height: 10),
                     ImageInputWidget(onSelectedImage: _selectImage),
+                    const SizedBox(height: 10),
+                    const LocationInputWidget(),
                   ],
                 ),
               ),
