@@ -5,9 +5,23 @@ import 'package:flutter/material.dart';
 import '../../data/db_util.dart';
 import '../../domain/identities/place_identity.dart';
 
-
 class GreatPlacesController with ChangeNotifier {
-  final List<PlaceIntinty> _items = [];
+  List<PlaceIntinty> _items = [];
+
+  Future<void> loadPlaces() async {
+    final dataList = await DbUtil.getData('places');
+    _items.clear();
+    _items = dataList.map((item) {
+      return PlaceIntinty(
+        id: item['id'],
+        title: item['title'],
+        image: File(item['image']),
+        location: null,
+      );
+    }).toList();
+
+    notifyListeners();
+  }
 
   List<PlaceIntinty> get items {
     return [..._items];
@@ -38,4 +52,3 @@ class GreatPlacesController with ChangeNotifier {
     notifyListeners();
   }
 }
-

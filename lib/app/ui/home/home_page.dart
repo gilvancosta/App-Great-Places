@@ -21,28 +21,33 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: Consumer<GreatPlacesController>(
-        child: const Center(
-          child: Text('Nenhum local cadastrado!'),
-        ),
-        builder: (ctx, greatPlaces, child) => greatPlaces.itemsCount == 0
-            ? child!
-            : ListView.builder(
-                itemCount: greatPlaces.itemsCount,
-                itemBuilder: (ctx, i) => ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: FileImage(
-                      greatPlaces.itemByIndex(i).image,
-                    ),
-                  ),
-                  title: Text(greatPlaces.itemByIndex(i).title),
-                  onTap: () {
-                    Navigator.of(context).pushNamed(
-                      AppRoutes.placeDetail,
-                      arguments: greatPlaces.itemByIndex(i),
-                    );
-                  },
+      body: FutureBuilder(
+        future: Provider.of<GreatPlacesController>(context, listen: false).loadPlaces(),
+        builder: (ctx, snapshot) => snapshot.connectionState == ConnectionState.waiting
+            ? const Center(child: CircularProgressIndicator())
+            : Consumer<GreatPlacesController>(
+                child: const Center(
+                  child: Text('Nenhum local cadastrado!'),
                 ),
+                builder: (ctx, greatPlaces, child) => greatPlaces.itemsCount == 0
+                    ? child!
+                    : ListView.builder(
+                        itemCount: greatPlaces.itemsCount,
+                        itemBuilder: (ctx, i) => ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: FileImage(
+                              greatPlaces.itemByIndex(i).image,
+                            ),
+                          ),
+                          title: Text(greatPlaces.itemByIndex(i).title),
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              AppRoutes.placeDetail,
+                              arguments: greatPlaces.itemByIndex(i),
+                            );
+                          },
+                        ),
+                      ),
               ),
       ),
     );
